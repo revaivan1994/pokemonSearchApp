@@ -11,7 +11,6 @@ const ThrowError = ({ shouldThrow }: { shouldThrow?: boolean }) => {
 };
 
 describe('ErrorBoundary Component', () => {
-  // Подавляем console.error для чистоты вывода тестов
   const originalError = console.error;
   
   beforeAll(() => {
@@ -22,7 +21,7 @@ describe('ErrorBoundary Component', () => {
     console.error = originalError;
   });
 
-  it('отображает дочерние элементы при отсутствии ошибки', () => {
+  it('displays child elements if there is no error', () => {
     render(
       <ErrorBoundary>
         <div>Test Content</div>
@@ -32,7 +31,7 @@ describe('ErrorBoundary Component', () => {
     expect(screen.getByText('Test Content')).toBeInTheDocument();
   });
 
-  it('отображает fallback UI при ошибке', () => {
+  it('displays a fallback UI when an error occurs', () => {
     render(
       <ErrorBoundary>
         <ThrowError shouldThrow />
@@ -42,7 +41,7 @@ describe('ErrorBoundary Component', () => {
     expect(screen.getByText('Something went wrong')).toBeInTheDocument();
   });
 
-  it('отображает сообщение об ошибке', () => {
+  it('displays an error message', () => {
     render(
       <ErrorBoundary>
         <ThrowError shouldThrow />
@@ -52,7 +51,7 @@ describe('ErrorBoundary Component', () => {
     expect(screen.getByText('Test error message')).toBeInTheDocument();
   });
 
-  it('показывает кнопку "Try again"', () => {
+  it('show button "Try again"', () => {
     render(
       <ErrorBoundary>
         <ThrowError shouldThrow />
@@ -63,7 +62,7 @@ describe('ErrorBoundary Component', () => {
     expect(button).toBeInTheDocument();
   });
 
-  it('кнопка "Try again" обрабатывает клики', () => {
+  it('the "Try again" button processes clicks', () => {
     render(
       <ErrorBoundary>
         <ThrowError shouldThrow />
@@ -76,7 +75,7 @@ describe('ErrorBoundary Component', () => {
     expect(() => fireEvent.click(button)).not.toThrow();
   });
 
-  it('логирует ошибку в консоль', () => {
+  it('logs an error to the console', () => {
     render(
       <ErrorBoundary>
         <ThrowError shouldThrow />
@@ -86,7 +85,7 @@ describe('ErrorBoundary Component', () => {
     expect(console.error).toHaveBeenCalled();
   });
 
-  it('имеет корректную структуру с классом error-boundary', () => {
+  it('has a correct structure with the error-boundary class', () => {
     const { container } = render(
       <ErrorBoundary>
         <ThrowError shouldThrow />

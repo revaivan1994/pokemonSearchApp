@@ -32,7 +32,7 @@ describe('App Component', () => {
         vi.restoreAllMocks();
     });
 
-    it('рендерится без ошибок', async () => {
+    it('renders without errors', async () => {
         vi.spyOn(pokemonApi, 'fetchPokemons').mockResolvedValue(mockPokemonList);
 
         render(<App />);
@@ -41,7 +41,7 @@ describe('App Component', () => {
         expect(screen.getByPlaceholderText('Search Pokémon...')).toBeInTheDocument();
     });
 
-    it('делает начальный API запрос при монтировании', async () => {
+    it('makes an initial API request when mounting', async () => {
         const fetchSpy = vi.spyOn(pokemonApi, 'fetchPokemons').mockResolvedValue(mockPokemonList);
 
         render(<App />);
@@ -51,7 +51,7 @@ describe('App Component', () => {
         });
     });
 
-    it('отображает Spinner во время загрузки данных', async () => {
+    it('displays a Spinner while data is loading', async () => {
         vi.spyOn(pokemonApi, 'fetchPokemons').mockImplementation(
             () => new Promise((resolve) => setTimeout(() => resolve(mockPokemonList), 1000))
         );
@@ -61,7 +61,7 @@ describe('App Component', () => {
         expect(screen.getByLabelText('Loading...')).toBeInTheDocument();
     });
 
-    it('отображает список покемонов после успешной загрузки', async () => {
+    it('displays a list of Pokemon after a successful download', async () => {
         vi.spyOn(pokemonApi, 'fetchPokemons').mockResolvedValue(mockPokemonList);
 
         render(<App />);
@@ -73,7 +73,7 @@ describe('App Component', () => {
         });
     });
 
-    it('показывает сообщение об ошибке при неудачном API запросе', async () => {
+    it('shows an error message when the API request fails', async () => {
         vi.spyOn(pokemonApi, 'fetchPokemons').mockRejectedValue(
             new Error('Error 404: Pokémon not found')
         );
@@ -86,7 +86,7 @@ describe('App Component', () => {
         });
     });
 
-    it('обрабатывает неизвестные ошибки корректно', async () => {
+    it('handles unknown errors correctly', async () => {
         vi.spyOn(pokemonApi, 'fetchPokemons').mockRejectedValue('Unknown error');
 
         render(<App />);
@@ -97,7 +97,7 @@ describe('App Component', () => {
         });
     });
 
-    it('загружает сохраненный поисковый запрос из localStorage при монтировании', async () => {
+    it('loads a saved search query from localStorage on mount', async () => {
         localStorage.setItem('searchTerm', 'charizard');
 
         const fetchSpy = vi.spyOn(pokemonApi, 'fetchPokemons').mockResolvedValue(mockSinglePokemon);
@@ -109,7 +109,7 @@ describe('App Component', () => {
         });
     });
 
-    it('обрабатывает поиск покемона по имени', async () => {
+    it('handles searching for a Pokemon by name', async () => {
         vi.spyOn(pokemonApi, 'fetchPokemons')
             .mockResolvedValueOnce(mockPokemonList)
             .mockResolvedValueOnce(mockSinglePokemon);
@@ -132,7 +132,7 @@ describe('App Component', () => {
         });
     });
 
-    it('обновляет состояние searchTerm при поиске', async () => {
+    it('updates the state of searchTerm when searching', async () => {
         vi.spyOn(pokemonApi, 'fetchPokemons').mockResolvedValue(mockPokemonList);
 
         render(<App />);
@@ -148,7 +148,7 @@ describe('App Component', () => {
         });
     });
 
-    it('показывает заголовок "Results:"', () => {
+    it('shows the title "Results:"', () => {
         vi.spyOn(pokemonApi, 'fetchPokemons').mockResolvedValue(mockPokemonList);
 
         render(<App />);
@@ -156,7 +156,7 @@ describe('App Component', () => {
         expect(screen.getByText('Results:')).toBeInTheDocument();
     });
 
-    it('имеет кнопку "Simulate Error" для тестирования ErrorBoundary', async () => {
+    it('have button "Simulate Error" for tests ErrorBoundary', async () => {
         vi.spyOn(pokemonApi, 'fetchPokemons').mockResolvedValue(mockPokemonList);
 
         render(<App />);
@@ -169,7 +169,7 @@ describe('App Component', () => {
         expect(errorButton).toBeInTheDocument();
     });
 
-    it('не показывает ошибку когда загрузка активна', async () => {
+    it('Doesnt show an error when the download is active.', async () => {
         vi.spyOn(pokemonApi, 'fetchPokemons').mockImplementation(
             () => new Promise((resolve) => setTimeout(() => resolve(mockPokemonList), 1000))
         );
@@ -180,7 +180,7 @@ describe('App Component', () => {
         expect(screen.queryByRole('alert')).not.toBeInTheDocument();
     });
 
-    it('не показывает список когда есть ошибка', async () => {
+    it('Doesnt show the list when there is an error', async () => {
         vi.spyOn(pokemonApi, 'fetchPokemons').mockRejectedValue(
             new Error('Network error')
         );
@@ -194,7 +194,7 @@ describe('App Component', () => {
         expect(screen.queryByText('pikachu')).not.toBeInTheDocument();
     });
 
-    it('отображает пустой список когда нет результатов', async () => {
+    it('displays an empty list when there are no results', async () => {
         vi.spyOn(pokemonApi, 'fetchPokemons').mockResolvedValue({
             results: [],
             count: 0
@@ -209,7 +209,7 @@ describe('App Component', () => {
         });
     });
 
-    it('вызывает API с правильными параметрами при поиске', async () => {
+    it('calls the API with the correct parameters when searching', async () => {
         const fetchSpy = vi.spyOn(pokemonApi, 'fetchPokemons')
             .mockResolvedValueOnce(mockPokemonList)
             .mockResolvedValueOnce(mockSinglePokemon);
@@ -231,7 +231,7 @@ describe('App Component', () => {
         });
     });
 
-    it('управляет состоянием загрузки корректно', async () => {
+    it('manages the loading state correctly', async () => {
         vi.spyOn(pokemonApi, 'fetchPokemons').mockResolvedValue(mockPokemonList);
 
         render(<App />);
