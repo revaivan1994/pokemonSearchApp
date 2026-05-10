@@ -71,3 +71,11 @@ export default defineConfig([
   },
 ])
 ```
+
+## Testing
+
+Run unit tests:
+
+```bash
+npm run test
+npm run test:coverage
